@@ -71,6 +71,20 @@ export default function() {
     });
 
   */
+  this.namespace = 'api';
+  this.get('/posts', function(db) {
+    const data = db.posts.map((post) => {
+      return {
+        type: 'posts',
+        id: post.id,
+        attributes: {
+          title: post.title
+        }
+      };
+    });
+
+    return { data: data };
+  });
 }
 
 /*
