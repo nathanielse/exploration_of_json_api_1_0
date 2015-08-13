@@ -2,6 +2,6 @@
 
 <ul>
   {{#each posts as |post|}}
-    <li>{{post.title}}</li>
+    <li class="post">{{link-to post.title 'show' post}}</li>
   {{/each}}
 </ul>

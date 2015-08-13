@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {
-    return this.store.findAll('post');
+  model(params) {
+    return this.store.findRecord('post', params.post_id);
   },
 
   setupController(controller, model) {
     this._super(...arguments);
-    controller.set('posts', model);
+    controller.set('post', model);
   }
 });

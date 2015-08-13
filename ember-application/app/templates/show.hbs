@@ -1,0 +1,9 @@
+<h1 class="title">{{post.title}}</h1>
+
+<p class="body">{{post.body}}</p>
+
+<h2>Comments</h2>
+
+{{#each post.comments as |comment|}}
+  <p class="comment">{{comment.content}}</p>
+{{/each}}

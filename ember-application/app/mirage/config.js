@@ -72,18 +72,97 @@ export default function() {
 
   */
   this.namespace = 'api';
+
   this.get('/posts', function(db) {
+
     const data = db.posts.map((post) => {
+      const comments = db.comments.where({post_id: post.id});
+
       return {
         type: 'posts',
         id: post.id,
         attributes: {
-          title: post.title
+          title: post.title,
+          body: post.body
+        },
+        relationships: {
+          comments: {
+            links: {
+              self: `/api/posts/${post.id}/relationships/comments`,
+              related: `/api/posts/${post.id}/comments`
+            },
+            data: comments.map((comment) => { return {type: 'comments', id: comment.id}; })
+          },
         }
       };
     });
 
-    return { data: data };
+    const comments = db.comments;
+    const included = comments.map((comment) => {
+      return {
+        type: 'comments',
+        id: comment.id,
+        attributes: {
+          content: comment.content
+        }
+      };
+    });
+
+    return { data: data, included: included };
+  });
+
+  this.get('/posts/:id', function(db, request) {
+    const post = db.posts.find(request.params.id);
+    const comments = db.comments.where({post_id: post.id});
+
+    const data = {
+        type: 'posts',
+        id: post.id,
+        attributes: {
+          title: post.title,
+          body: post.body
+        },
+        relationships: {
+          comments: {
+            links: {
+              self: `/api/posts/${post.id}/relationships/comments`,
+              related: `/api/posts/${post.id}/comments`
+            },
+            data: comments.map((comment) => { return {type: 'comments', id: comment.id}; })
+          }
+        }
+    };
+
+    const included = comments.map((comment) => {
+      return {
+        type: 'comments',
+        id: comment.id,
+        attributes: {
+          content: comment.content
+        }
+      };
+    });
+
+    return { data: data, included: included };
+  });
+
+  this.get('/posts/:id/comments', function(db, request) {
+    const postId = request.params.id;
+    const comments = db.comments.where({post_id: postId});
+
+    const data = {
+      data: comments.map((comment) => {
+        return {
+          type: 'comments',
+          id: comment.id,
+          attributes: {
+            content: comment.content
+          }
+        };
+      })
+    };
+
+    return {data: data};
   });
 }
 
