@@ -1,0 +1,9 @@
+# Client-side of the application
+emberapp:
+  build: ember-application
+  command: ember server
+  ports:
+    - "4200:4200"
+    - "49152:49152"
+  volumes:
+    - ./ember-application:/myapp
