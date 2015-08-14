@@ -98,15 +98,43 @@ export default function() {
     });
 
     const comments = db.comments;
-    const included = comments.map((comment) => {
+    const included_comments = comments.map((comment) => {
       return {
         type: 'comments',
         id: comment.id,
         attributes: {
           content: comment.content
+        },
+        relationships: {
+          author: {
+            links: {
+              self: `/api/comments/${comment.id}/relationships/author`,
+              related: `api/comments/${comment.id}/author`
+            },
+            data: { type: 'users', id: comment.user_id }
+          }
         }
       };
     });
+
+    let user_ids = {};
+    comments.forEach((comment) => { user_ids[comment.user_id] = true; });
+
+    user_ids = Object.keys(user_ids);
+    const users = db.users.find(user_ids);
+
+    const included_users = users.map((user) => {
+      return {
+        type: 'users',
+        id: user.id,
+        attributes: {
+          'first-name': user['first-name'],
+          'last-name': user['last-name']
+        }
+      };
+    });
+
+    const included = included_comments.concat(included_users);
 
     return { data: data, included: included };
   });
@@ -133,15 +161,42 @@ export default function() {
         }
     };
 
-    const included = comments.map((comment) => {
+    const included_comments = comments.map((comment) => {
       return {
         type: 'comments',
         id: comment.id,
         attributes: {
           content: comment.content
+        },
+        relationships: {
+          author: {
+            links: {
+              self: `/api/comments/${comment.id}/relationships/author`,
+              related: `/api/comments/${comment.id}/author`,
+            },
+            data: { type: 'users', id: comment.user_id }
+          }
         }
       };
     });
+
+    let user_ids = {};
+    comments.forEach((comment) => { user_ids[comment.user_id] = true; });
+
+    user_ids = Object.keys(user_ids);
+    const users = db.users.find(user_ids);
+    const included_users = users.map((user) => {
+      return {
+        type: 'users',
+        id: user.id,
+        attributes: {
+          'first-name': user['first-name'],
+          'last-name': user['last-name']
+        }
+      };
+    });
+
+    const included = included_comments.concat(included_users);
 
     return { data: data, included: included };
   });

@@ -5,5 +5,8 @@
 <h2>Comments</h2>
 
 {{#each post.comments as |comment|}}
-  <p class="comment">{{comment.content}}</p>
+  <div class="comment">
+      <h3 class="author">{{capitalize comment.author.fullName}}</h3>
+      <p class="content">{{comment.content}}</p>
+  </div>
 {{/each}}
