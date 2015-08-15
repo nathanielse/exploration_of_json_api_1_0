@@ -6,13 +6,13 @@ built with Ruby on Rails .
 
 ## Build a development environment
 
-A development environment can be built in Linux containers using
+A development environment can be built with Linux containers using
 [Docker](https://docs.docker.com/compose/) and
 [Docker Compose](https://docs.docker.com/compose/). On the website of the Docker
 project, installation guides are available for the Docker Engine and Docker
 Compose.
 
-The following command build the development environment and install the
+The following commands build the development environment and install the
 dependencies of the Ember application :
 
     $ docker-compose build
