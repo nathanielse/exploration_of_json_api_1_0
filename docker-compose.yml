@@ -5,6 +5,8 @@ apiserver:
   build: api-server
   volumes:
     - ./api-server:/myapp
+  links:
+    - db
 emberapp:
   build: ember-application
   command: ember server
