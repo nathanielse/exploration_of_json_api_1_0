@@ -1,8 +1,9 @@
 # Exploration of JSON API 1.0
 
 A simple project for exploring the specification
-[JSON API 1.0](http://jsonapi.org) with an Ember application and an API server
-built with Ruby on Rails .
+[JSON API 1.0](http://jsonapi.org) with an [Ember](http://emberjs.com/)
+application and an API server built with
+[Ruby on Rails](http://rubyonrails.org/) .
 
 ## Build a development environment
 
