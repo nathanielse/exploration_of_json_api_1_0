@@ -1,4 +1,10 @@
 # Client-side of the application
+db:
+  image: postgres:9.4
+apiserver:
+  build: api-server
+  volumes:
+    - ./api-server:/myapp
 emberapp:
   build: ember-application
   command: ember server
