@@ -54,5 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  jsonapi_resources :posts
+  namespace :api do
+    jsonapi_resources :posts
+  end
 end
