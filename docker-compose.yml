@@ -3,7 +3,7 @@ db:
   image: postgres:9.4
 apiserver:
   build: api-server
-  command: rails server
+  command: rails server --binding 0.0.0.0
   ports:
     - "3000:3000"
   volumes:
@@ -12,10 +12,12 @@ apiserver:
     - db
 emberapp:
   build: ember-application
-  command: ember server
+  command: ember server --proxy http://apiserver:3000
   ports:
     - "4200:4200"
     - "49152:49152"
     - "7357:7357"
   volumes:
     - ./ember-application:/myapp
+  links:
+    - apiserver
