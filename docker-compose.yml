@@ -3,6 +3,9 @@ db:
   image: postgres:9.4
 apiserver:
   build: api-server
+  command: rails server
+  ports:
+    - "3000:3000"
   volumes:
     - ./api-server:/myapp
   links:
