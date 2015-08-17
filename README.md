@@ -18,4 +18,30 @@ dependencies of the Ember application :
 
     $ docker-compose build
     $ docker-compose run emberapp npm install
-    $ docker-compose run emberapp bower install
+    $ docker-compose run emberapp bower --allow-root install
+
+## Launch application
+
+Use the command :
+
+    $ docker-compose up
+
+## Use the development environment with the Ember application
+
+Change permissions of files that are owned by the container user 'root' :
+
+    $ docker-compose run emberapp chown -R $UID /.root /myapp
+
+For the shell Bash, to ease the use of the command-line applications `ember`,
+`npm` and `bower`, add the following aliases :
+
+    $ alias ember="docker-compose run -u $UID --no-deps --service-ports emberapp ember"
+    $ alias npm="docker-compose run -u $UID --no-deps emberapp npm"
+    $ alias bower="docker-compose run -u $UID --no-deps emberapp bower"
+
+## Use the development environment with the API server
+
+For Bash, add aliases for `rails` and `rake` commands :
+
+    $ alias rails="docker-compose run -u $UID --service-ports apiserver rails"
+    $ alias rake="docker-compose run -u $UID apiserver rake"
